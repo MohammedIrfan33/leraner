@@ -2,9 +2,17 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:leraner/app/routes/app_routes.dart';
 import 'package:leraner/features/home/view/home_page.dart';
 import 'package:leraner/features/onboarding/view/onboarding_page.dart';
+import 'package:leraner/features/root/view/root_page.dart';
+import 'package:leraner/features/streak/view/streak_view.dart';
+import 'package:leraner/features/subjects/view/subject_page.dart';
 
 class AppPages {
   static final pages = [
+
+     GetPage(
+      name: AppRoutes.root,
+      page: () => RootPage(),
+    ),
     GetPage(
       name: AppRoutes.onboarding,
       page: () => OnboardingPage(),
@@ -12,6 +20,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.home,
       page: () => HomePage(),
+    ),
+     GetPage(
+      name: AppRoutes.subjects,
+      page: () => SubjectsPage(),
+    ),
+     GetPage(
+      name: AppRoutes.streak,
+      page: () => StreakPage(),
     ),
     
   ];

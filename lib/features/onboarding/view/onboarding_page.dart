@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:leraner/app/core/constants/app_colors.dart';
+import 'package:leraner/app/core/widgets/primary_button.dart';
 import 'package:leraner/features/onboarding/controller/onboard_controller.dart';
-
 
 class OnboardingPage extends StatelessWidget {
   OnboardingPage({super.key});
@@ -10,68 +12,140 @@ class OnboardingPage extends StatelessWidget {
 
   final pages = const [
     {
-      "title": "Smarter Learning Starts Here",
-      "description": "Build skills with structured and guided learning."
+      "title": "Smarter \nLearning Starts Here",
+      "description":
+          "Personalized lessons that adapt to \nyour pace and goals.",
+      "image": "assets/on_bord1.png",
     },
     {
-      "title": "Learn. Practice. Succeed.",
-      "description": "Practice daily and achieve your learning goals."
-    }
+      "title": "Track Your Progress",
+      "description": "Monitor your learning journey and\nimprove daily.",
+      "image": "assets/on_bord2.png",
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
+      backgroundColor: AppColors.kprimary,
       body: Obx(() {
         final page = pages[controller.pageIndex.value];
 
-        return Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
-
-              /// Image placeholder
-              Container(
-                height: 200,
-                width: double.infinity,
-                color: Colors.grey.shade300,
-                child: const Center(child: Text("Image")),
-              ),
-
-              const SizedBox(height: 32),
-
-              Text(
-                page['title']!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: 60.h,
+              left: 0,
+              right: 0,
+              height: screenHeight - 350.h,
+              child: Center(
+                child: Image.asset(
+                  page['image']!,
+                  width: 335.w,
+                  fit: BoxFit.contain,
                 ),
               ),
+            ),
 
-              const SizedBox(height: 12),
-
-              Text(
-                page['description']!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 350.h,
+              child: Image.asset(
+                'assets/bottom.png',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,
               ),
+            ),
 
-              const Spacer(),
-
-              ElevatedButton(
-                onPressed: controller.nextPage,
-                child: const Text("Next"),
+            Positioned(
+              bottom: 320.h, // adjust to overlap
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Image.asset(
+                  'assets/onbordIcon.png',
+                  width: 61,
+                  height: 61,
+                ),
               ),
+            ),
 
-              TextButton(
-                onPressed: controller.skip,
-                child: const Text("Skip"),
+            Positioned(
+              bottom: 35.h,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40.w),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      page['title']!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+
+                        color: AppColors.ktextBlack,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      page['description']!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.kSubtitileColor,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        pages.length,
+                        (index) => Container(
+                          margin: EdgeInsets.symmetric(horizontal: 4.w),
+                          height: 7.w,
+                          width: 7.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: controller.pageIndex.value == index
+                                ? AppColors.kprimary
+                                : AppColors.kDotColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 50.h),
+
+                    PrimaryButton(
+                      title: "Next",
+                      onPressed: controller.nextPage,
+                    ),
+
+                    TextButton(
+                      onPressed: controller.skip,
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                          fontSize: 17.sp,
+                          color: AppColors.kprimary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       }),
     );

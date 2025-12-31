@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'app/routes/app_pages.dart';
 import 'app/routes/app_routes.dart';
 
@@ -16,10 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onboarding,
-      getPages: AppPages.pages,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), 
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: AppRoutes.onboarding,
+          getPages: AppPages.pages,
+          theme: ThemeData(
+            fontFamily: 'Poppins'
+          ),
+        );
+      },
     );
   }
 }
